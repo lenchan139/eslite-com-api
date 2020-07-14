@@ -8,7 +8,7 @@ describe("Run demo", (): void => {
     "Should get one result as Array",
     async (): Promise<void> => {
       const result = await esliteComCollection("春夏秋冬，日日食光。生活美學家的鑄鐵鍋料理手帖");
-
+      console.log(result)
       expect(Array.isArray(result)).toBeTruthy();
       expect((result as DetailType[]).length).toBe(1);
     },

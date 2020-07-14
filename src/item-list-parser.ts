@@ -136,6 +136,27 @@ const getSpecificHtmlCode = (htmlCode: string): string | null => {
   return result && result[0];
 };
 
+export const itemDetailParser = async (htmlCode: string): Promise<string> => {
+  const first = ''
+  const select: string[] | null = htmlCode.match(
+    /<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">[\w\W]*?<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">/gi,
+  );
+  let  rawResult = select && select[0]
+  if(!rawResult) rawResult = ''
+  const result = rawResult.replace(/<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">/,'<div>')
+  .replace('<h2>內容簡介</h2>','')
+  .replace('<!--網站專用:S-->', '')
+  .replace('<!--網站專用:E-->', '')
+  .replace('<!-- 短片: 開始 -->', '')
+  .replace('<!-- 短片: 結束 -->', '')
+  .replace(/<!-- 圖片說明: 開始 -->[\w\W]*? <!-- 圖片說明: END -->/gi, '')
+  .replace('<a href="#top" class="top_line" title="top"></a>', '')
+  .replace('<hr />', '')
+  .replace('<!--作者介紹character-->', '')
+  .replace('<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">','')
+
+  return result.trim()
+}
 export const itemListParser = async (htmlCode: string): Promise<DetailType[]> => {
   // To get specific html code containing data
   const targetHtmlCode: string | null = getSpecificHtmlCode(htmlCode);

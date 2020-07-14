@@ -1,7 +1,7 @@
 {
-  "name": "@flowereatfish/eslite-com-api",
-  "version": "1.0.5",
-  "description": "Unofficial eslite-com API",
+  "name": "eslite-com-api-long-intro",
+  "version": "1.0.6",
+  "description": "Unofficial eslite-com API (Plus Long Introduction)",
   "main": "index.js",
   "scripts": {
     "start": "npm run demo:ts",
@@ -22,12 +22,12 @@
     "api",
     "web-crawler"
   ],
-  "author": "Eating-Fish Flower",
+  "author": "Len Chan (origin: Eating-Fish Flower)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/FlowerEatFish/eslite-com-api/issues"
   },
-  "homepage": "https://github.com/FlowerEatFish/eslite-com-api#readme",
+  "homepage": "https://github.com/FlowerEatFish/eslite-com-api",
   "dependencies": {
     "axios": "^0.19.0"
   },

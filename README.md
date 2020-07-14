@@ -23,6 +23,10 @@
     - [Input parameters](#input-parameters)
     - [Output results](#output-results)
 
+## Difference with eslite-com-api
+This package will also try fetch full introdction from detail page but not only fetch from quering page. So this package will load and parse content longer than the original one.
+If you don't need full introduction, we suggest you should use the [eslite-com-api](https://github.com/FlowerEatFish/eslite-com-api)
+
 ## Requirements
 
 - This construct uses [Axios.js](https://github.com/axios/axios), so you need to care about Cross-Origin Requests (CORS).

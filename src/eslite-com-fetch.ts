@@ -44,6 +44,11 @@ const fetchFullHtmlCode = async (url: string): Promise<string | null> => {
   }
 };
 
+export const detailFetch = async (url: string): Promise<FetchResult> => {
+
+  return { data: await fetchFullHtmlCode(url), url: url };
+};
+
 export const collectionFetch = async (keyword: string, page: number): Promise<FetchResult> => {
   const fullUrl = setUrl(keyword, page);
 

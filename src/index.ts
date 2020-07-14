@@ -3,8 +3,8 @@
  */
 
 import { EsliteComCollectionFunction, DetailType } from "../index";
-import { collectionFetch, FetchResult } from "./eslite-com-fetch";
-import { itemListParser } from "./item-list-parser";
+import { collectionFetch, FetchResult, detailFetch } from './eslite-com-fetch';
+import { itemListParser, itemDetailParser } from './item-list-parser';
 
 const esliteComCollection: EsliteComCollectionFunction = async (
   keyword: string,
@@ -16,6 +16,19 @@ const esliteComCollection: EsliteComCollectionFunction = async (
     const itemList = await itemListParser(htmlCodeAfterFetch.data);
     if (itemList.length > 0) {
       // To do here if the HTML code contains one or more result(s)
+      for(const i in itemList){
+        const item = itemList[i]
+        const url : string = item.url ?? ""
+        if(item && item != null){
+        const detailHtmlCodeFetch : FetchResult = await detailFetch(url)
+        if(detailHtmlCodeFetch && detailHtmlCodeFetch.data && detailHtmlCodeFetch.data.includes(`<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction"`)){
+          const detail : string  = await itemDetailParser(detailHtmlCodeFetch.data)
+          item.introduction = detail
+          itemList[i] = item
+
+        }
+        }
+      }
       return itemList;
     }
     // To do here if no result is got from the HTML code
