@@ -1,6 +1,6 @@
 {
   "name": "eslite-com-api-long-intro",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "Unofficial eslite-com API (Plus Long Introduction)",
   "main": "index.js",
   "scripts": {

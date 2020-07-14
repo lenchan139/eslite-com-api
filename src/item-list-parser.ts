@@ -2,7 +2,7 @@
  * To parse the results when the fetcher got one or more data.
  */
 
-import { DetailType, PriceField } from "../index";
+import { DetailType, PriceField, AdditionalDetailType } from '../index';
 
 const removeAllHtmlTag = (text: string): string => {
   let result = text.replace(/<\/?\w+[^>]*>/gi, "");
@@ -117,6 +117,7 @@ const getItem = (htmlCode: string): DetailType => {
     title: getItemTitle(htmlCode),
     url: getItemUrl(htmlCode),
     author: getItemAuthor(htmlCode),
+    translator: "",
     publisher: getItemPublisher(htmlCode),
     publicationDate: getItemPublicationDate(htmlCode),
     imageUrl: getItemImageUrl(htmlCode),
@@ -136,27 +137,73 @@ const getSpecificHtmlCode = (htmlCode: string): string | null => {
   return result && result[0];
 };
 
-export const itemDetailParser = async (htmlCode: string): Promise<string> => {
-  const first = ''
+export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDetailType> => {
+  // const first = '';
+  const selectAuthor = htmlCode.match(
+    /<h2 class="PI_item"> 作者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl00_CharacterName_ctl00_linkName"[\w\W]*?<\/a>/gi,
+  );
+  let rawAuthor = selectAuthor && selectAuthor[0];
+  if (!rawAuthor) {
+    rawAuthor = "";
+  }
+  let trueAuthor = "";
+  if (rawAuthor) {
+    const htmlTrueAuthor = rawAuthor.match(/target="_blank">[\w\W]*?<\/a>/gi);
+
+    const preTrueAuthor = htmlTrueAuthor && htmlTrueAuthor[0];
+    if (preTrueAuthor) {
+      trueAuthor = preTrueAuthor.replace(`target="_blank">`, "").replace("</a>", "");
+    }
+  }
+  let rawTranslator: string[] | null = htmlCode.match(
+    /譯者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl01_CharacterName_ctl00_linkName" [\w\W]*?<\/a>/gi,
+  );
+
+  let translator = rawTranslator && rawTranslator[0];
+
+  // console.log(translator);
+  let trueTranslator = '';
+  if (translator) {
+    const htmlTTranslator = translator.match(/target="_blank">[\w\W]*?<\/a>/gi);
+    const preTranslator = htmlTTranslator && htmlTTranslator[0];
+
+    if (preTranslator) {
+      trueTranslator = preTranslator.replace(`target="_blank">`, "").replace("</a>", "");
+    }
+    // console.log(trueTranslator);
+  }
   const select: string[] | null = htmlCode.match(
     /<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">[\w\W]*?<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">/gi,
   );
-  let  rawResult = select && select[0]
-  if(!rawResult) rawResult = ''
-  const result = rawResult.replace(/<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">/,'<div>')
-  .replace('<h2>內容簡介</h2>','')
-  .replace('<!--網站專用:S-->', '')
-  .replace('<!--網站專用:E-->', '')
-  .replace('<!-- 短片: 開始 -->', '')
-  .replace('<!-- 短片: 結束 -->', '')
-  .replace(/<!-- 圖片說明: 開始 -->[\w\W]*? <!-- 圖片說明: END -->/gi, '')
-  .replace('<a href="#top" class="top_line" title="top"></a>', '')
-  .replace('<hr />', '')
-  .replace('<!--作者介紹character-->', '')
-  .replace('<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">','')
+  let rawResult = select && select[0];
+  if (!rawResult) {
+    rawResult = "";
+  }
+  const result = rawResult
+    .replace(
+      /<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">/,
+      "<div>",
+    )
+    .replace("<h2>內容簡介</h2>", "")
+    .replace("<!--網站專用:S-->", "")
+    .replace("<!--網站專用:E-->", "")
+    .replace("<!-- 短片: 開始 -->", "")
+    .replace("<!-- 短片: 結束 -->", "")
+    .replace(/<!-- 圖片說明: 開始 -->[\w\W]*? <!-- 圖片說明: END -->/gi, '')
+    .replace('<a href="#top" class="top_line" title="top"></a>', '')
+    .replace("<hr />", "")
+    .replace("<!--作者介紹character-->", "")
+    .replace(
+      '<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">',
+      "",
+    );
 
-  return result.trim()
-}
+  return {
+    author: trueAuthor || "",
+    translator: trueTranslator || "",
+    introduction: result || "",
+  };
+};
 export const itemListParser = async (htmlCode: string): Promise<DetailType[]> => {
   // To get specific html code containing data
   const targetHtmlCode: string | null = getSpecificHtmlCode(htmlCode);

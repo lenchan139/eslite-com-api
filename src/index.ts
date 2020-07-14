@@ -16,17 +16,27 @@ const esliteComCollection: EsliteComCollectionFunction = async (
     const itemList = await itemListParser(htmlCodeAfterFetch.data);
     if (itemList.length > 0) {
       // To do here if the HTML code contains one or more result(s)
-      for(const i in itemList){
-        const item = itemList[i]
-        const url : string = item.url ?? ""
-        if(item && item != null){
-        const detailHtmlCodeFetch : FetchResult = await detailFetch(url)
-        if(detailHtmlCodeFetch && detailHtmlCodeFetch.data && detailHtmlCodeFetch.data.includes(`<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction"`)){
-          const detail : string  = await itemDetailParser(detailHtmlCodeFetch.data)
-          item.introduction = detail
-          itemList[i] = item
+      for (const i in itemList) {
+        const item = itemList[i];
+        const url: string = item.url ?? "";
+        if (item && item != null) {
+          const detailHtmlCodeFetch: FetchResult = await detailFetch(url);
+          if (
+            detailHtmlCodeFetch &&
+            detailHtmlCodeFetch.data &&
+            detailHtmlCodeFetch.data.includes(
+              `<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction"`,
+            )
+          ) {
+            const detail = await itemDetailParser(detailHtmlCodeFetch.data)
+            item.introduction = detail.introduction;
+            if (item.author != null) {
 
-        }
+            item.author[0] = detail.author;
+            item.translator = detail.translator;
+            }
+            itemList[i] = item;
+          }
         }
       }
       return itemList;
