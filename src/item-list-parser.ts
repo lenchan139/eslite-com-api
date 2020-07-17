@@ -118,11 +118,14 @@ const getItem = (htmlCode: string): DetailType => {
     url: getItemUrl(htmlCode),
     author: getItemAuthor(htmlCode),
     translator: "",
+    illstrator: "",
     publisher: getItemPublisher(htmlCode),
     publicationDate: getItemPublicationDate(htmlCode),
     imageUrl: getItemImageUrl(htmlCode),
     price: getItemPrice(htmlCode),
     introduction: getItemIntroduction(htmlCode),
+    authorIntro: "",
+    boundType: "",
   };
 };
 
@@ -140,7 +143,7 @@ const getSpecificHtmlCode = (htmlCode: string): string | null => {
 export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDetailType> => {
   // const first = '';
   const selectAuthor = htmlCode.match(
-    /<h2 class="PI_item"> 作者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl00_CharacterName_ctl00_linkName"[\w\W]*?<\/a>/gi,
+    /<h2 class="PI_item"> 作者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList[\w\W]*?<\/a>/gi,
   );
   let rawAuthor = selectAuthor && selectAuthor[0];
   if (!rawAuthor) {
@@ -156,7 +159,7 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
     }
   }
   let rawTranslator: string[] | null = htmlCode.match(
-    /譯者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl01_CharacterName_ctl00_linkName" [\w\W]*?<\/a>/gi,
+    /譯者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl[\w\W]*?<\/a>/gi,
   );
 
   let translator = rawTranslator && rawTranslator[0];
@@ -171,6 +174,44 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
       trueTranslator = preTranslator.replace(`target="_blank">`, "").replace("</a>", "");
     }
     // console.log(trueTranslator);
+  }
+
+  let rawIllustrator: string[] | null = htmlCode.match(
+    /繪者\/攝影者[\w\W]*?<a id="ctl00_ContentPlaceHolder1_CharacterList_ctl[\w\W]*?<\/a>/gi,
+  );
+
+  let illustrator = rawIllustrator && rawIllustrator[0];
+
+  // console.log(translator);
+  let trueIllustrator = '';
+  if (illustrator) {
+    const htmlIllustrator = illustrator.match(/target="_blank">[\w\W]*?<\/a>/gi);
+    const preIllustrator = htmlIllustrator && htmlIllustrator[0];
+
+    if (preIllustrator) {
+      trueIllustrator = preIllustrator
+        .replace(`target="_blank">`, "")
+        .replace("</a>", "")
+        .replace("/ 圖", "")
+        .trim();
+    }
+    // console.log(trueIllustrator);
+  }
+  const rawBoundType = htmlCode.match(/_lblSpecType">裝訂<\/span>[\w\W]*?<\/span>/gi);
+  let trueBoundType = '';
+  if(rawBoundType){
+    const htmlBoundType = rawBoundType && rawBoundType[0];
+    // console.log(htmlBoundType);
+    let preBoundType = htmlBoundType.replace(`_lblSpecType">裝訂</span> ／ `, "");
+    const indexer = preBoundType.match(/>[\w\W]*?<\//gi);
+    if(indexer){
+      const s = indexer && indexer[0];
+      if(s){
+        trueBoundType = s.replace(">","").replace("</","");
+        console.log(trueBoundType);
+      }
+    }
+
   }
   const select: string[] | null = htmlCode.match(
     /<div id="ctl00_ContentPlaceHolder1_Product_info_more1_introduction" class="C_box" style="display:block;">[\w\W]*?<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">/gi,
@@ -196,12 +237,33 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
     .replace(
       '<div id="ctl00_ContentPlaceHolder1_Product_info_more1_all_character" class="C_box" style="display:none;">',
       "",
-    );
+    ).trim();
 
+  const selectAuthorIntro: string[] | null = htmlCode.match(
+    /<h2>作者介紹<[\w\W]*?<a href="#top" class="top_line" title="top"/gi,
+  );
+
+  let rawAuthorIntro = selectAuthorIntro && selectAuthorIntro[0];
+  if (!rawAuthorIntro) {
+    rawAuthorIntro = "";
+  }
+  let authorIntro = rawAuthorIntro
+    .replace("<h2>作者介紹</h2> ", "")
+    .replace('<a href="#top" class="top_line" title="top"', "")
+    .replace("<P><STRONG>■作者簡介</STRONG></P>", "")
+    .trim();
+  const indexOfPOfAuthorIntro = authorIntro.indexOf("<P>");
+  if (indexOfPOfAuthorIntro >= 0) {
+    authorIntro = authorIntro.substring(indexOfPOfAuthorIntro);
+  }
+  console.log(authorIntro);
   return {
     author: trueAuthor || "",
+    illstrator: trueIllustrator || "",
     translator: trueTranslator || "",
     introduction: result || "",
+    authorIntro: authorIntro || "",
+    boundType: trueBoundType || "",
   };
 };
 export const itemListParser = async (htmlCode: string): Promise<DetailType[]> => {

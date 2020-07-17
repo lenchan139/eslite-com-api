@@ -33,8 +33,12 @@ const esliteComCollection: EsliteComCollectionFunction = async (
             if (item.author != null) {
 
             item.author[0] = detail.author;
-            item.translator = detail.translator;
             }
+
+            item.translator = detail.translator;
+            item.authorIntro = detail.authorIntro;
+            item.illstrator = detail.illstrator;
+            item.boundType = detail.boundType;
             itemList[i] = item;
           }
         }

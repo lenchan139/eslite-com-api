@@ -13,11 +13,18 @@ export interface DetailType {
   imageUrl: string | null;
   price: PriceField;
   introduction: string | null;
+  illstrator: string;
+  authorIntro: string;
+  boundType: string;
+  // awardIntro: string | null;
 }
 export interface AdditionalDetailType {
   introduction: string;
   author: string;
+  illstrator: string;
   translator: string;
+  authorIntro: string;
+  boundType: string;
 }
 export type EsliteComCollectionFunction = (
   keyword: string,
