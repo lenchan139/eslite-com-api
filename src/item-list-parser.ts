@@ -126,6 +126,7 @@ const getItem = (htmlCode: string): DetailType => {
     introduction: getItemIntroduction(htmlCode),
     authorIntro: "",
     boundType: "",
+    awards: "",
   };
 };
 
@@ -199,15 +200,15 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
   }
   const rawBoundType = htmlCode.match(/_lblSpecType">裝訂<\/span>[\w\W]*?<\/span>/gi);
   let trueBoundType = '';
-  if(rawBoundType){
+  if (rawBoundType) {
     const htmlBoundType = rawBoundType && rawBoundType[0];
     // console.log(htmlBoundType);
     let preBoundType = htmlBoundType.replace(`_lblSpecType">裝訂</span> ／ `, "");
     const indexer = preBoundType.match(/>[\w\W]*?<\//gi);
-    if(indexer){
+    if (indexer) {
       const s = indexer && indexer[0];
-      if(s){
-        trueBoundType = s.replace(">","").replace("</","");
+      if (s) {
+        trueBoundType = s.replace(">", "").replace("</", "");
         // console.log(trueBoundType);
       }
     }
@@ -257,6 +258,22 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
     authorIntro = authorIntro.substring(indexOfPOfAuthorIntro);
   }
   // console.log(authorIntro);
+
+
+  const selectAwards: string[] | null = htmlCode.match(
+    /<h2>得獎紀錄<[\w\W]*?<a href="#top" class="top_line" title="top"/gi,
+  );
+  let trueAwards = "";
+  if (selectAwards) {
+    const preAwards = selectAwards && selectAwards[0]
+    if (preAwards) {
+      trueAwards = preAwards
+        .replace("<h2>得獎紀錄</h2> ", "")
+        .replace('<a href="#top" class="top_line" title="top"', "")
+        .trim();
+    }
+  }
+
   return {
     author: trueAuthor || "",
     illstrator: trueIllustrator || "",
@@ -264,6 +281,7 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
     introduction: result || "",
     authorIntro: authorIntro || "",
     boundType: trueBoundType || "",
+    awards: trueAwards || "",
   };
 };
 export const itemListParser = async (htmlCode: string): Promise<DetailType[]> => {

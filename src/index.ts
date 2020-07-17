@@ -39,6 +39,7 @@ const esliteComCollection: EsliteComCollectionFunction = async (
             item.authorIntro = detail.authorIntro;
             item.illstrator = detail.illstrator;
             item.boundType = detail.boundType;
+            item.awards = detail.awards;
             itemList[i] = item;
           }
         }

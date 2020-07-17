@@ -16,6 +16,7 @@ export interface DetailType {
   illstrator: string;
   authorIntro: string;
   boundType: string;
+  awards: string;
   // awardIntro: string | null;
 }
 export interface AdditionalDetailType {
@@ -25,6 +26,7 @@ export interface AdditionalDetailType {
   translator: string;
   authorIntro: string;
   boundType: string;
+  awards: string;
 }
 export type EsliteComCollectionFunction = (
   keyword: string,

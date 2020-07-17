@@ -24,7 +24,7 @@
     - [Output results](#output-results)
 
 ## Difference with eslite-com-api
-This package will also try fetch full introdction from detail page but not only fetch from quering page. So this package will load and parse content longer than the original one.
+This package will also try fetch full description from detail page but not only fetch from quering page also in book detail page for each quering items. So this package will load and parse content longer than the original one.
 If you don't need full introduction, we suggest you should use the [eslite-com-api](https://github.com/FlowerEatFish/eslite-com-api)
 
 ## Requirements
@@ -87,20 +87,22 @@ $ yarn start # npm start
 
 ```shell
 >>> You search data using keyword "春夏秋冬，日日食光。生活美學家的鑄鐵鍋料理手帖".
+
 [
   {
-    title: '圖書騎兵隊',
-    url: 'http://www.eslite.com/product.aspx?pgid=1003128672740491&kw=9789861898971&pi=1',
-    author: [ '海瑟漢森' ],
-    translator: '陳郁婷',
-    illstrator: '大衛司摩 (David Small)',
-    publisher: '格林文化事業股份有限公司',
-    publicationDate: '2019/01/31',
-    imageUrl: 'http://pic.eslite.com/Upload/Product/201901/m/636833111432561250.jpg',
-    price: { discount: 79, currentPrice: 221 },
-    introduction: '<div>     ◎真實歷史改編，講述1930年代一群勇敢的圖書館員不畏艱辛、不取分文，只為上山送書給貧困人家，讓他們能讀書識字的感人故事。 <br>◎凱迪克金獎得主大衛司摩和克里斯多福大獎得主海瑟漢森感人之作。 <br>◎榮獲克里斯多福獎、美國五大湖區最佳圖書獎、安妮里茲德故事獎……等15項兒童文學獎肯定。 <br> <br>從小生活在高山上的阿凱，完全無法理解為什麼姊姊阿蕾喜歡看書，那一堆鬼畫符的符號，阿凱看了就頭痛。但是有一位圖書館員，不怕天氣糟，不怕路途遠，總會在固定的時間帶著書到阿凱的家。阿凱很清楚那不是一段輕鬆的路，但究竟是什麼讓那位圖書館員堅持騎馬上山只為了送書來呢？ <br> <br>本書改編自美國1930年代的真實歷史，在經濟大蕭條時期，有一群女圖書館員不畏風雨，每個月都會騎馬上山送書，讓居民們不用因為交通的困難，就放棄學習新知的心。她們的薪水微薄，每個月只領台幣405元的工資。送書的路途更是辛苦，她們平均要騎160公里以上的距離才能到目的地，要花上一個禮拜才能到達。雖然艱辛，但是她們對這份工作感到很驕傲，因為她們成功把外面世界的訊息，帶進山裡，更讓許多原本討厭讀書的孩子，變成終生的愛書人。 <br> <br>透過這個感人的故事，讓孩子了解，每讀完一本書，就是在心裡種下一顆種子，跟著孩子一起成長、茁壯，並隨時提供支持與能量，幫助孩子飛得遠，更飛得穩。   </div>',
-    authorIntro: '<p><strong>■作者簡介</strong></p><p><strong>海瑟漢森（</strong><strong>Heather Henson）</strong><br>出生於美國肯塔基州，從小生活在家族經營的劇院裡。畢業後曾任兒童書籍編輯。在紐約生活多年後，她回到家鄉，把重心放在寫作上面。海瑟的作品多關注在歷史上未被歌頌的英雄，並讚美他們的成就。也因此催生了這本講述1930年代有一群圖書館員為阿帕拉契山無數家庭提供書籍，幫助他們提升識字率、及學習新知的勇敢故事。</p><p><strong><strong>■繪者簡介</strong></strong></p><p><strong><strong></strong>大衛司摩</strong><strong>（David Small）</strong><br>美國知名童書作家、畫家，曾獲凱迪克大獎、克里斯多福獎、EB懷特文學獎。年少時多次在夏天前往印地安納州鄉下與祖父母同住，使他對動物及鄉村生活有一份特殊的感情和喜愛，對日後的創作也有影響。大衛在耶魯大學取得藝術碩士後，在大學教繪畫長達十四年之久，後來由於校方刪減經費而失業，從此開始創作。大衛擅長以水彩、鉛筆及粉蠟筆作畫，畫風柔和雋永，獨具特色。在格林出版的作品有《小恩的秘密花園》。</p>',
-    boundType: '精裝'
+    title: '地球為什麼哭了呢?',
+    url: 'http://www.eslite.com/product.aspx?pgid=1003145172825105&kw=9789579125697&pi=1',
+    author: [ '好日記' ],
+    translator: '陳怡妡',
+    illstrator: '好日記 (하루치)',
+    publisher: '大穎文化事業股份有限公司',
+    publicationDate: '2020/02/12',
+    imageUrl: 'http://pic.eslite.com/Upload/Product/202002/m/637170932039851250.jpg',
+    price: { discount: 9, currentPrice: 270 },
+    introduction: '<div>     短暫便利生活的代價，由地球概括承受 <br/>一則反映環境隱憂的寓言故事 <br/> <br/>那些我們用完即丟的物品、垃圾──現在都到哪裡去了？ <br/>一座乾淨樸實的海島，從島民好奇地將逝世的大鯨魚肚子剖開後，發現了滿滿的垃圾。 <br/>隨著時間流逝，鯨魚的身體因生物分解回歸自然，很多不可分解的垃圾卻永遠在沙灘上。 <br/>就像打開了潘朵拉的盒子，海島的乾淨、動物的生存環境，從此一去不復返。 <br/>從這個名字與地球同音的小女孩「蒂裘」眼中，看見人類為了短暫的便利生活，所付上的昂貴代價…… <br/> <br/>這是一則關於環境與人性的故事，反映海洋與生物此時此刻正面臨的困境。 <br/>本書在視覺呈現上極具吸引力，每幅圖畫帶有鮮明的顏色對比，多樣的構圖及色彩讓讀者在閱讀完本作品後依舊留下深刻的印象。 <br/>除了豐富的視覺呈現，充滿張力的故事結構勾引著讀者們的好奇心，讓人迫不及待地一頁頁翻閱想知道故事的進展。 <br/>人類求新、求變、求快的社會腳步，正大量而快速的製造許多地球不堪負荷的用品，這些短時間無法被分解的垃圾不斷擴張蔓延，從城市移動到鄉村、從陸地堆積到海洋、從人類的居住範圍擴張到動物的生存環境，蔓延到我們無法想像的區域。 <br/>人類短暫享樂過後的代價，卻由動物的生活品質甚至生命來承擔，由所有周圍的島嶼環境一起概括承受。 <br/>本書是大人與小孩都值得一看的繪本作品。作者期望透過本書可以喚起人類對大自然的愛護之心，進一步盡到保護大自然的本分。 <br/> <br/>★本書傳達了有力的信息，以拓寬讀者視野的方式說明了我們的困境！   </div>',
+    authorIntro: '<P>好日記 <br/>好日記 (하루치) <br/>您好，我是好日記。 <br/>我習慣帶著菜籃子上市場採購食物，而不吃外賣。讓我們一起創造充滿芬多精且人和小貓咪都可以共存的自然環境吧！就算只是減少一點點的塑膠垃圾也會對我們的自然環境產生幫助，以此為發想，我寫了《地球為什麼哭了呢？》。主角「蒂裘」是想著「地球」所取的名字。 <br/>擁有社群軟體IG帳號「murakhobby_haruchi」也是Web網頁動畫連載的作家，涉獵領域有插畫、動畫導演、紡織設計以及繪本創作。 <br/>陳怡妡 <br/>陳怡妡 <br/>畢業於文化大學韓語系，目前學術進修中，同時以自由譯者、韓語教師的身分活動。希望透過文字傳達更多的訊息給世界上需要安慰的朋友們，讓語言幫彼此建立起橋樑，也成為互相了解彼此的開端。譯有《無論何時，媽媽永遠在這裡》、《媽媽藥》、《是兔子嗎？》、《現在是幾點呢？》等。 <br/></P>',
+    boundType: '精裝',
+    awards: '安東尼布朗圖畫書大賽第8屆獲獎繪本！'
   }
 ]
 ```
