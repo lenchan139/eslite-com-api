@@ -208,7 +208,7 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
       const s = indexer && indexer[0];
       if(s){
         trueBoundType = s.replace(">","").replace("</","");
-        console.log(trueBoundType);
+        // console.log(trueBoundType);
       }
     }
 
@@ -256,7 +256,7 @@ export const itemDetailParser = async (htmlCode: string): Promise<AdditionalDeta
   if (indexOfPOfAuthorIntro >= 0) {
     authorIntro = authorIntro.substring(indexOfPOfAuthorIntro);
   }
-  console.log(authorIntro);
+  // console.log(authorIntro);
   return {
     author: trueAuthor || "",
     illstrator: trueIllustrator || "",
