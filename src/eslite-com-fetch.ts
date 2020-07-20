@@ -36,8 +36,16 @@ const setUrl = (keyword: string, page: number): string => {
 
 const fetchFullHtmlCode = async (url: string): Promise<string | null> => {
   try {
-    const response = await axios.get(url);
-
+    const response = await axios.get(url, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, PUT, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "*",
+      },
+    });
+    response.headers["Access-Control-Allow-Origin"] = "*";
+    response.headers["Access-Control-Allow-Methods"] = "GET";
+    response.headers["Access-Control-Allow-Headers"] = "*";
     return removeLeftoverCode(response.data);
   } catch (error) {
     return null;
